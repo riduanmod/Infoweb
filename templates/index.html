@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Premium FF Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0d14; /* Deep blue-black */
+            --card-bg: #151822; /* Slightly lighter card bg */
+            --accent-blue: #00d2ff;
+            --accent-purple: #8a2be2;
+            --accent-gold: #ffc107;
+            --accent-pink: #ff4b72;
+            --text-main: #ffffff;
+            --text-muted: #8e95a5;
+            --border-color: #232736;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        /* --- Search Bar --- */
+        .search-container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-color);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 5px;
+            margin-bottom: 2.5rem;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .search-icon {
+            padding: 0 15px;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .search-container input {
+            flex: 1;
+            padding: 15px 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            font-weight: 500;
+            outline: none;
+        }
+
+        .search-container input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-container button {
+            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-container button:active {
+            transform: scale(0.95);
+        }
+
+        /* --- Main Card --- */
+        .main-card {
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            display: none; /* Hidden initially */
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        /* --- Profile Header (Avatar, Name, UID) --- */
+        .avatar-wrapper {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar-border {
+            width: 120px;
+            height: 120px;
+            border-radius: 18px;
+            padding: 4px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+            position: relative;
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 14px;
+            object-fit: cover;
+            background-color: #000;
+        }
+
+        .level-badge {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--card-bg);
+            border: 2px solid var(--accent-blue);
+            color: var(--text-main);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+
+        .player-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .uid-container {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(255,255,255,0.05);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: 1px solid var(--border-color);
+        }
+
+        .uid-container:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .uid-container span {
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin: 0 8px;
+        }
+
+        /* --- Stats Row (BR, CS, Likes) --- */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background-color: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.2rem 0.5rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label.br { color: var(--accent-gold); }
+        .stat-label.cs { color: var(--accent-blue); }
+        .stat-label.likes { color: var(--accent-pink); }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* --- Guild Section --- */
+        .guild-section {
+            width: 100%;
+            background-color: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .guild-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .guild-name-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .g-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+
+        .g-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .g-level-badge {
+            background-color: var(--accent-blue);
+            color: #000;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 800;
+        }
+
+        .guild-members-col {
+            text-align: right;
+        }
+
+        .g-members-val {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .g-members-val span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .guild-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+
+        .g-detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .g-detail-val {
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 2px;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: var(--text-main);
+        }
+
+        /* --- Signature Section --- */
+        .signature-section {
+            width: 100%;
+            position: relative;
+        }
+
+        .sig-divider {
+            text-align: center;
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .sig-divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 35%;
+            height: 1px;
+            background-color: var(--border-color);
+        }
+
+        .sig-divider::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 35%;
+            height: 1px;
+            background-color: var(--border-color);
+        }
+
+        .sig-divider span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background-color: var(--card-bg);
+            padding: 0 10px;
+        }
+
+        .signature-box {
+            background-color: #0b0d14; /* Darker bg for bio */
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .signature-content {
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #d1d5db;
+            white-space: pre-wrap; /* Preserve formatting */
+            word-break: break-word;
+            line-height: 1.4;
+        }
+        
+        /* Colorful formatting simulation for bio */
+        .bio-red { color: #ff4444; }
+        .bio-white { color: #ffffff; }
+
+        .copy-bio-hint {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        /* --- Loader & Error --- */
+        .loader {
+            display: none;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid var(--accent-blue);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .error-msg {
+            display: none;
+            color: #ff4b72;
+            background: rgba(255, 75, 114, 0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid rgba(255, 75, 114, 0.3);
+        }
+
+        /* Tooltip */
+        .toast {
+            position: fixed;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-main);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: bottom 0.3s ease;
+            z-index: 1000;
+        }
+        .toast.show {
+            bottom: 30px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <i class="fa-solid fa-user search-icon"></i>
+        <input type="number" id="uidInput" placeholder="Enter Player UID..." autocomplete="off">
+        <button onclick="fetchData()"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+
+    <!-- Feedback -->
+    <div class="loader" id="loader"></div>
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- Main Profile Card -->
+    <div class="main-card" id="profileCard">
+        
+        <!-- Avatar & Basic Info -->
+        <div class="avatar-wrapper">
+            <div class="avatar-border">
+                <img src="" alt="Avatar" class="avatar-img" id="p_avatar" onerror="this.src='https://i.ibb.co/C0V096T/icon-600.png';">
+            </div>
+            <div class="level-badge">LV <span id="p_level">-</span></div>
+        </div>
+
+        <div class="player-name" id="p_name">Player Name</div>
+        
+        <div class="uid-container" onclick="copyText('p_uid_val', 'UID')">
+            UID <span id="p_uid_val">--------</span> <i class="fa-regular fa-copy"></i>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="stat-label br">BR RANK</div>
+                <div class="stat-value" id="s_br">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label cs">CS RANK</div>
+                <div class="stat-value" id="s_cs">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label likes">LIKES</div>
+                <div class="stat-value" id="s_likes">0</div>
+            </div>
+        </div>
+
+        <!-- Guild Section -->
+        <div class="guild-section" id="guildSection">
+            <div class="guild-header-row">
+                <div class="guild-name-col">
+                    <span class="g-label">GUILD NAME</span>
+                    <div class="g-name">
+                        <span id="g_name">No Guild</span>
+                        <span class="g-level-badge" id="g_level_badge" style="display:none;">LVL <span id="g_level">-</span></span>
+                    </div>
+                </div>
+                <div class="guild-members-col">
+                    <span class="g-label">MEMBERS</span>
+                    <div class="g-members-val"><span id="g_mem_curr">-</span> / <span id="g_mem_max">-</span> <span>MEM</span></div>
+                </div>
+            </div>
+            
+            <div class="guild-details-grid">
+                <div class="g-detail-item">
+                    <span class="g-label">GUILD ID</span>
+                    <div class="g-detail-val">
+                        <span id="g_id">--------</span>
+                        <button class="copy-btn" onclick="copyText('g_id', 'Guild ID')"><i class="fa-regular fa-copy"></i></button>
+                    </div>
+                </div>
+                <div class="g-detail-item">
+                    <span class="g-label">OWNER UID</span>
+                    <div class="g-detail-val">
+                        <span id="g_owner_uid">--------</span>
+                        <button class="copy-btn" onclick="copyText('g_owner_uid', 'Owner UID')"><i class="fa-regular fa-copy"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signature Section -->
+        <div class="signature-section">
+            <div class="sig-divider"><span>SIGNATURE</span></div>
+            <div class="signature-box" onclick="copyText('p_bio_content', 'Signature')">
+                <div class="signature-content" id="p_bio_content">No signature available.</div>
+                <span class="copy-bio-hint">Click to copy</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toastMsg">Copied!</div>
+
+    <script>
+        // DOM Elements
+        const els = {
+            input: document.getElementById('uidInput'),
+            btn: document.querySelector('.search-container button'),
+            loader: document.getElementById('loader'),
+            error: document.getElementById('errorMsg'),
+            card: document.getElementById('profileCard'),
+            guildSec: document.getElementById('guildSection'),
+            toast: document.getElementById('toastMsg')
+        };
+
+        // Utility to format Bio to handle Free Fire color codes
+        function formatBio(text) {
+            if (!text) return "No signature.";
+            // Basic sanitization to prevent HTML injection
+            let safeText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            
+            // Note: True FF hex parsing is complex (e.g., [FFFF00]text). 
+            // For this UI, we keep the original text structure to look like the screenshot.
+            return safeText;
+        }
+
+        async function fetchData() {
+            const uid = els.input.value.trim();
+            if (!uid) {
+                showError("Enter a UID first.");
+                return;
+            }
+
+            // Reset UI
+            els.error.style.display = 'none';
+            els.card.style.display = 'none';
+            els.loader.style.display = 'block';
+            els.btn.disabled = true;
+
+            try {
+                // Ensure this URL matches your Flask backend route
+                const res = await fetch(`/get?uid=${uid}`);
+                const data = await res.json();
+
+                if (!res.ok) throw new Error(data.error || "Player not found");
+
+                populateUI(data);
+
+                els.loader.style.display = 'none';
+                els.card.style.display = 'flex';
+            } catch (err) {
+                els.loader.style.display = 'none';
+                showError(err.message);
+            } finally {
+                els.btn.disabled = false;
+            }
+        }
+
+        function populateUI(data) {
+            const p = data["Player Information"] || {};
+            const r = data["Rank Information"] || {};
+            const g = data["Guild Information"] || {};
+
+            // Helper
+            const val = (v) => (v !== null && v !== undefined && v !== "") ? v : '-';
+
+            // Top Profile
+            document.getElementById('p_avatar').src = p.Player_Avatar_URL || 'https://i.ibb.co/C0V096T/icon-600.png';
+            document.getElementById('p_level').innerText = val(p.Player_Level);
+            document.getElementById('p_name').innerHTML = `${val(p.Player_Name)}`;
+            document.getElementById('p_uid_val').innerText = val(p.Player_UID);
+
+            // Stats
+            document.getElementById('s_br').innerText = val(r.BR_Points);
+            document.getElementById('s_cs').innerText = val(r.CS_Points);
+            document.getElementById('s_likes').innerText = val(p.Player_Likes);
+
+            // Guild
+            if (g.Guild_ID) {
+                document.getElementById('g_name').innerText = val(g.Guild_Name);
+                document.getElementById('g_level_badge').style.display = 'inline-block';
+                document.getElementById('g_level').innerText = val(g.Guild_Level);
+                document.getElementById('g_mem_curr').innerText = val(g.Guild_Total_Members);
+                document.getElementById('g_mem_max').innerText = val(g.Guild_Capacity);
+                document.getElementById('g_id').innerText = val(g.Guild_ID);
+                document.getElementById('g_owner_uid').innerText = val(g.Guild_Leader_UID);
+            } else {
+                document.getElementById('g_name').innerText = "No Guild";
+                document.getElementById('g_level_badge').style.display = 'none';
+                document.getElementById('g_mem_curr').innerText = "-";
+                document.getElementById('g_mem_max').innerText = "-";
+                document.getElementById('g_id').innerText = "--------";
+                document.getElementById('g_owner_uid').innerText = "--------";
+            }
+
+            // Bio / Signature
+            document.getElementById('p_bio_content').innerHTML = formatBio(p.Player_Signature);
+        }
+
+        function showError(msg) {
+            els.error.innerText = msg;
+            els.error.style.display = 'block';
+        }
+
+        function copyText(elementId, name) {
+            const text = document.getElementById(elementId).innerText;
+            if (text && text !== '-' && text !== '--------') {
+                navigator.clipboard.writeText(text);
+                showToast(`${name} Copied!`);
+            }
+        }
+
+        function showToast(msg) {
+            els.toast.innerText = msg;
+            els.toast.classList.add('show');
+            setTimeout(() => {
+                els.toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // Enter key listener
+        els.input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') fetchData();
+        });
+    </script>
+</body>
+</html>
