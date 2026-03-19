@@ -1,35 +1,41 @@
-<!DOCTYPE html>
+v>
+            <<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Premium FF Profile Database</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>FF Premium Info - by Riduan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-main: #090a0f;
-            --bg-card: #12141c;
-            --bg-card-inner: #1a1d27;
-            --accent-cyan: #00e5ff;
-            --accent-gold: #ffb800;
-            --accent-pink: #ff2a5f;
-            --text-primary: #ffffff;
-            --text-secondary: #8c93a8;
-            --border-color: #24283b;
+            --bg-dark: #05070f;
+            --bg-card: rgba(16, 20, 35, 0.7);
+            --bg-card-hover: rgba(22, 28, 48, 0.9);
+            --primary-glow: #00f2fe;
+            --primary-color: #4facfe;
+            --gold-accent: #ffd700;
+            --danger-accent: #ff0844;
+            --text-main: #ffffff;
+            --text-muted: #a0aec0;
+            --border-light: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(0, 242, 254, 0.3);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Outfit', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-primary);
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(79, 172, 254, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(255, 215, 0, 0.05), transparent 25%);
+            color: var(--text-main);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -37,495 +43,602 @@
             min-height: 100vh;
         }
 
-        /* --- Header & Search --- */
-        .search-wrapper {
-            width: 100%;
-            max-width: 550px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            padding: 5px;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-            transition: border-color 0.3s ease;
+        /* --- Header & Search Bar --- */
+        .header-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, var(--primary-color), var(--primary-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
         }
 
-        .search-wrapper:focus-within {
-            border-color: var(--accent-cyan);
+        .search-container {
+            width: 100%;
+            max-width: 550px;
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(10, 14, 25, 0.8);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 6px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .search-box:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px var(--border-glow);
         }
 
         .search-icon {
             padding: 0 15px;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             font-size: 1.2rem;
         }
 
-        .search-wrapper input {
+        .search-box input {
             flex: 1;
             background: transparent;
             border: none;
-            color: var(--text-primary);
+            color: var(--text-main);
             font-size: 1.1rem;
             padding: 12px 5px;
             outline: none;
             font-weight: 500;
         }
 
-        .search-wrapper input::placeholder {
-            color: var(--text-secondary);
+        .search-box input::placeholder {
+            color: var(--text-muted);
         }
 
-        .search-wrapper button {
-            background: var(--accent-cyan);
+        .search-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-glow));
             border: none;
-            border-radius: 8px;
-            width: 50px;
-            height: 50px;
+            border-radius: 12px;
+            width: 55px;
+            height: 55px;
             color: #000;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .search-wrapper button:hover {
-            background: #00c4db;
-            transform: scale(0.95);
+        .search-btn:active {
+            transform: scale(0.92);
         }
 
-        /* --- Main Container --- */
-        .profile-container {
+        /* --- Global Card Style --- */
+        .profile-wrapper {
             width: 100%;
             max-width: 550px;
-            display: none; /* Flex on load */
+            display: none;
             flex-direction: column;
-            gap: 1.2rem;
+            gap: 1.5rem;
         }
 
         .card {
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
             padding: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: border-color 0.3s, background 0.3s;
         }
 
-        .card-header {
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: var(--bg-card-hover);
+        }
+
+        .card-title {
             font-family: 'Rajdhani', sans-serif;
             font-size: 1.2rem;
             font-weight: 700;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 1.2rem;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-light);
             padding-bottom: 0.8rem;
         }
 
-        .card-header i {
-            color: var(--accent-cyan);
+        .card-title i {
+            color: var(--primary-glow);
         }
 
-        /* --- Top Profile Section --- */
-        .top-profile {
+        /* --- 1. Player Header Card --- */
+        .player-header {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
             position: relative;
+            padding-top: 2rem;
         }
 
-        .avatar-box {
+        .avatar-container {
             position: relative;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
-        .avatar-border {
-            width: 110px;
-            height: 110px;
-            background: linear-gradient(135deg, var(--accent-cyan), #3b82f6);
-            border-radius: 20px;
-            padding: 3px;
-            box-shadow: 0 0 25px rgba(0, 229, 255, 0.2);
+        .avatar-ring {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, var(--primary-glow), var(--gold-accent));
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.2);
+            position: relative;
         }
 
         .avatar-img {
             width: 100%;
             height: 100%;
-            border-radius: 17px;
+            border-radius: 50%;
             object-fit: cover;
             background-color: #000;
+            border: 2px solid #000;
         }
 
-        /* Fixed Level Badge */
         .level-badge {
             position: absolute;
-            bottom: -12px;
+            bottom: -5px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--bg-card);
-            border: 2px solid var(--accent-cyan);
-            color: var(--text-primary);
-            padding: 4px 12px;
+            background: #000;
+            border: 2px solid var(--primary-glow);
+            color: var(--primary-glow);
+            padding: 4px 14px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
-            white-space: nowrap; /* Forces text to stay on one line */
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            z-index: 2;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.8);
         }
 
         .player-name {
             font-family: 'Rajdhani', sans-serif;
             font-size: 2.2rem;
             font-weight: 700;
-            margin-top: 0.5rem;
-            color: var(--text-primary);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
-        .uid-badge {
-            background: var(--bg-card-inner);
-            border: 1px solid var(--border-color);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
+        .uid-copy-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--border-light);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .uid-badge:hover {
-            background: rgba(255,255,255,0.05);
-            color: var(--text-primary);
+        .uid-copy-badge:hover {
+            background: rgba(0, 242, 254, 0.1);
+            border-color: var(--primary-glow);
+            color: var(--text-main);
         }
 
-        .uid-badge span {
-            color: var(--accent-cyan);
-            font-weight: 700;
+        .uid-copy-badge .uid-num {
+            color: var(--primary-glow);
+            font-weight: 600;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
         }
 
-        /* --- Rank & Likes --- */
-        .stats-grid-3 {
+        /* Stats Grid (BR, CS, Likes) */
+        .main-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 1.5rem;
+            gap: 12px;
             width: 100%;
+            margin-top: 2rem;
         }
 
-        .stat-box {
-            background: var(--bg-card-inner);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1rem 0.5rem;
+        .stat-item {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-light);
+            border-radius: 14px;
+            padding: 1.2rem 0.5rem;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
 
-        .stat-box .label {
+        .stat-item .s-label {
             font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            color: var(--text-muted);
+        }
+        .stat-item .s-val {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.6rem;
             font-weight: 700;
-            color: var(--text-secondary);
-            margin-bottom: 5px;
+        }
+
+        .c-gold { color: var(--gold-accent); }
+        .c-blue { color: var(--primary-glow); }
+        .c-pink { color: var(--danger-accent); }
+
+        /* --- 2. Signature Card (Now placed before Guild) --- */
+        .signature-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Premium fancy background for signature */
+        .signature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
+        }
+
+        .sig-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .sig-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .stat-box .val {
-            font-size: 1.4rem;
-            font-weight: 700;
-            font-family: 'Rajdhani', sans-serif;
+        /* Fancy Copy Button for Signature */
+        .fancy-copy-btn {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            color: var(--primary-glow);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
         }
 
-        .c-br { color: var(--accent-gold); }
-        .c-cs { color: var(--accent-cyan); }
-        .c-lk { color: var(--accent-pink); }
+        .fancy-copy-btn:hover {
+            background: var(--primary-glow);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
 
-        /* --- Info Grids (Account, Guild, Leader) --- */
+        .bio-content {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px dashed rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: monospace;
+            font-size: 1rem;
+            color: #e2e8f0;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+            position: relative;
+        }
+
+        .bio-content i.fa-quote-left {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.05);
+        }
+
+        /* --- 3. Grid Information Cards --- */
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
         }
 
-        .info-item {
-            background: var(--bg-card-inner);
+        .info-box {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255,255,255,0.05);
             padding: 12px 15px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.02);
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
+            justify-content: center;
         }
 
-        .info-item.full-width {
+        .info-box.full {
             grid-column: span 2;
         }
 
-        .info-item .i-label {
+        .info-label {
             font-size: 0.75rem;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             text-transform: uppercase;
             font-weight: 600;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
         }
 
-        .info-item .i-val {
+        .info-value {
             font-size: 1.05rem;
             font-weight: 500;
-            color: var(--text-primary);
+            color: var(--text-main);
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
         }
 
-        .copy-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .copy-btn:hover { color: var(--accent-cyan); }
-
-        /* Custom Badges in text */
-        .badge-inline {
-            background: var(--accent-cyan);
-            color: #000;
+        .inline-badge {
+            background: rgba(0, 242, 254, 0.15);
+            color: var(--primary-glow);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            padding: 2px 8px;
+            border-radius: 6px;
             font-size: 0.75rem;
-            padding: 2px 6px;
-            border-radius: 4px;
             font-weight: 700;
             margin-left: 8px;
-            vertical-align: middle;
         }
 
-        /* --- Signature Box --- */
-        .bio-box {
-            background: #050608;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 1.5rem;
-            font-family: monospace;
-            font-size: 0.9rem;
-            color: #a9b1d6;
-            white-space: pre-wrap;
-            word-break: break-word;
-            line-height: 1.5;
-            position: relative;
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
             cursor: pointer;
+            font-size: 1.1rem;
+            padding: 5px;
+            transition: color 0.2s;
         }
 
-        .bio-box:hover {
-            border-color: rgba(255,255,255,0.1);
+        .icon-btn:hover {
+            color: var(--gold-accent);
         }
 
-        .bio-hint {
-            position: absolute;
-            bottom: 8px;
-            right: 12px;
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            font-family: 'Roboto', sans-serif;
-        }
-
-        /* --- Feedback UI --- */
-        .loader {
+        /* --- Loading & Error UI --- */
+        .loader-container {
             display: none;
-            width: 45px;
-            height: 45px;
-            border: 4px solid var(--border-color);
-            border-top: 4px solid var(--accent-cyan);
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 2rem 0;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(0, 242, 254, 0.1);
+            border-top: 4px solid var(--primary-glow);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 2rem auto;
+        }
+
+        .loader-text {
+            color: var(--primary-glow);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            letter-spacing: 2px;
+            animation: pulse 1.5s infinite;
         }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-        .error-msg {
+        .error-box {
             display: none;
-            background: rgba(255, 42, 95, 0.1);
-            border: 1px solid var(--accent-pink);
-            color: var(--accent-pink);
-            padding: 12px;
-            border-radius: 8px;
+            background: rgba(255, 8, 68, 0.1);
+            border: 1px solid var(--danger-accent);
+            color: #ff4d4d;
+            padding: 15px;
+            border-radius: 12px;
             text-align: center;
             font-weight: 500;
             width: 100%;
             max-width: 550px;
+            box-shadow: 0 0 15px rgba(255, 8, 68, 0.2);
         }
 
-        .toast {
+        /* --- Toast Notification --- */
+        .toast-msg {
             position: fixed;
-            bottom: -60px;
+            bottom: -80px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--text-primary);
-            color: #000;
-            padding: 10px 24px;
+            background: rgba(10, 14, 25, 0.95);
+            border: 1px solid var(--primary-glow);
+            color: var(--primary-glow);
+            padding: 12px 30px;
             border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: bottom 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.3);
+            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .toast.show { bottom: 30px; }
 
+        .toast-msg.show {
+            bottom: 40px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Search Section -->
-    <div class="search-wrapper">
-        <i class="fa-solid fa-user-astronaut search-icon"></i>
-        <input type="number" id="uidInput" placeholder="Enter Player UID..." autocomplete="off">
-        <button onclick="fetchData()"><i class="fa-solid fa-search"></i></button>
+    <div class="header-title">FF Info Panel</div>
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fa-solid fa-radar search-icon"></i>
+            <input type="number" id="uidInput" placeholder="Enter Player UID..." autocomplete="off">
+            <button class="search-btn" onclick="fetchData()"><i class="fa-solid fa-crosshairs"></i></button>
+        </div>
     </div>
 
-    <!-- Feedback -->
-    <div class="loader" id="loader"></div>
-    <div class="error-msg" id="errorMsg"></div>
+    <div class="loader-container" id="loader">
+        <div class="spinner"></div>
+        <div class="loader-text">SEARCHING DATABASE...</div>
+    </div>
+    <div class="error-box" id="errorMsg"></div>
 
-    <!-- Main Content -->
-    <div class="profile-container" id="profileData">
-        
-        <!-- MAIN PROFILE CARD -->
-        <div class="card top-profile">
-            <div class="avatar-box">
-                <div class="avatar-border">
+    <div class="profile-wrapper" id="profileData">
+
+        <div class="card player-header">
+            <div class="avatar-container">
+                <div class="avatar-ring">
                     <img src="" alt="Avatar" class="avatar-img" id="p_avatar">
                 </div>
-                <!-- Fix for Level wrapping -->
                 <div class="level-badge">LV <span id="p_level">0</span></div>
             </div>
 
             <div class="player-name" id="p_name">Player Name</div>
             
-            <div class="uid-badge" onclick="copyText('p_uid_val', 'UID')">
-                UID <span id="p_uid_val">00000000</span> <i class="fa-regular fa-copy"></i>
+            <div class="uid-copy-badge" onclick="copyValue('p_uid_val', 'UID')">
+                <span>UID</span>
+                <span class="uid-num" id="p_uid_val">00000000</span>
+                <i class="fa-regular fa-copy"></i>
             </div>
 
-            <div class="stats-grid-3">
-                <div class="stat-box">
-                    <div class="label c-br">BR Rank</div>
-                    <div class="val" id="s_br">0</div>
+            <div class="main-stats">
+                <div class="stat-item">
+                    <div class="s-label c-gold">BR Rank</div>
+                    <div class="s-val c-gold" id="s_br">0</div>
                 </div>
-                <div class="stat-box">
-                    <div class="label c-cs">CS Rank</div>
-                    <div class="val" id="s_cs">0</div>
+                <div class="stat-item">
+                    <div class="s-label c-blue">CS Rank</div>
+                    <div class="s-val c-blue" id="s_cs">0</div>
                 </div>
-                <div class="stat-box">
-                    <div class="label c-lk">Likes</div>
-                    <div class="val" id="s_likes">0</div>
+                <div class="stat-item">
+                    <div class="s-label c-pink">Likes</div>
+                    <div class="s-val c-pink" id="s_likes">0</div>
                 </div>
             </div>
         </div>
 
-        <!-- ACCOUNT DETAILS CARD -->
+        <div class="card signature-card">
+            <div class="sig-header-flex">
+                <div class="sig-title"><i class="fa-solid fa-signature"></i> Signature / Bio</div>
+                <button class="fancy-copy-btn" onclick="copyValue('p_bio_content', 'Signature')">
+                    <i class="fa-solid fa-copy"></i> Copy Bio
+                </button>
+            </div>
+            <div class="bio-content" id="p_bio_content">
+                <i class="fa-solid fa-quote-left"></i>
+                No signature available.
+            </div>
+        </div>
+
         <div class="card">
-            <div class="card-header"><i class="fa-solid fa-address-card"></i> Account Details</div>
+            <div class="card-title"><i class="fa-solid fa-id-card-clip"></i> Account Info</div>
             <div class="info-grid">
-                <div class="info-item">
-                    <span class="i-label">EXP (Experience)</span>
-                    <span class="i-val" id="a_exp">-</span>
+                <div class="info-box">
+                    <span class="info-label">EXP (Experience)</span>
+                    <span class="info-value" id="a_exp">-</span>
                 </div>
-                <div class="info-item">
-                    <span class="i-label">Region</span>
-                    <span class="i-val" id="a_region">-</span>
+                <div class="info-box">
+                    <span class="info-label">Server Region</span>
+                    <span class="info-value" id="a_region">-</span>
                 </div>
-                <div class="info-item full-width">
-                    <span class="i-label">Account Created</span>
-                    <span class="i-val" id="a_created">-</span>
+                <div class="info-box full">
+                    <span class="info-label">Account Created</span>
+                    <span class="info-value"><i class="fa-regular fa-calendar-plus" style="color:var(--text-muted); margin-right:8px;"></i> <span id="a_created">-</span></span>
                 </div>
-                <div class="info-item full-width">
-                    <span class="i-label">Last Login</span>
-                    <span class="i-val" id="a_last_login">-</span>
+                <div class="info-box full">
+                    <span class="info-label">Last Login Time</span>
+                    <span class="info-value"><i class="fa-solid fa-clock-rotate-left" style="color:var(--text-muted); margin-right:8px;"></i> <span id="a_last_login">-</span></span>
                 </div>
             </div>
         </div>
 
-        <!-- GUILD DETAILS CARD -->
         <div class="card" id="guildSection">
-            <div class="card-header"><i class="fa-solid fa-shield-halved"></i> Guild Details</div>
+            <div class="card-title"><i class="fa-solid fa-shield-cat"></i> Guild Profile</div>
             <div class="info-grid">
-                <div class="info-item full-width">
-                    <span class="i-label">Guild Name</span>
-                    <span class="i-val">
-                        <span id="g_name">No Guild</span> 
-                        <span class="badge-inline" id="g_level_badge" style="display: none;">LV <span id="g_level">0</span></span>
+                <div class="info-box full">
+                    <span class="info-label">Guild Name</span>
+                    <span class="info-value">
+                        <span id="g_name" style="color: var(--gold-accent); font-weight: 700;">No Guild</span> 
+                        <span class="inline-badge" id="g_level_badge" style="display: none;">LV <span id="g_level">0</span></span>
                     </span>
                 </div>
-                <div class="info-item">
-                    <span class="i-label">Guild ID</span>
-                    <span class="i-val">
+                <div class="info-box">
+                    <span class="info-label">Guild ID</span>
+                    <span class="info-value">
                         <span id="g_id">-</span>
-                        <button class="copy-btn" onclick="copyText('g_id', 'Guild ID')"><i class="fa-regular fa-copy"></i></button>
+                        <button class="icon-btn" onclick="copyValue('g_id', 'Guild ID')"><i class="fa-solid fa-clone"></i></button>
                     </span>
                 </div>
-                <div class="info-item">
-                    <span class="i-label">Members</span>
-                    <span class="i-val"><span id="g_members">- / -</span></span>
+                <div class="info-box">
+                    <span class="info-label">Members</span>
+                    <span class="info-value"><span id="g_members">- / -</span> <i class="fa-solid fa-users" style="color:var(--text-muted); font-size: 0.9rem;"></i></span>
                 </div>
             </div>
         </div>
 
-        <!-- GUILD LEADER CARD -->
         <div class="card" id="leaderSection">
-            <div class="card-header"><i class="fa-solid fa-crown" style="color: var(--accent-gold);"></i> Guild Leader</div>
+            <div class="card-title"><i class="fa-solid fa-crown" style="color: var(--gold-accent);"></i> Guild Leader</div>
             <div class="info-grid">
-                <div class="info-item full-width">
-                    <span class="i-label">Leader Name</span>
-                    <span class="i-val">
+                <div class="info-box full">
+                    <span class="info-label">Leader Name</span>
+                    <span class="info-value">
                         <span id="l_name">-</span>
-                        <span class="badge-inline">LV <span id="l_level">0</span></span>
+                        <span class="inline-badge" style="border-color: var(--gold-accent); color: var(--gold-accent);">LV <span id="l_level">0</span></span>
                     </span>
                 </div>
-                <div class="info-item">
-                    <span class="i-label">Leader UID</span>
-                    <span class="i-val">
+                <div class="info-box">
+                    <span class="info-label">Leader UID</span>
+                    <span class="info-value">
                         <span id="l_uid">-</span>
-                        <button class="copy-btn" onclick="copyText('l_uid', 'Leader UID')"><i class="fa-regular fa-copy"></i></button>
+                        <button class="icon-btn" onclick="copyValue('l_uid', 'Leader UID')"><i class="fa-solid fa-clone"></i></button>
                     </span>
                 </div>
-                <div class="info-item">
-                    <span class="i-label">Leader Likes</span>
-                    <span class="i-val" id="l_likes">-</span>
+                <div class="info-box">
+                    <span class="info-label">Leader Likes</span>
+                    <span class="info-value" style="color: var(--danger-accent);"><span id="l_likes">-</span> <i class="fa-solid fa-heart" style="font-size: 0.9rem;"></i></span>
                 </div>
-                <div class="info-item full-width">
-                    <span class="i-label">Leader Last Login</span>
-                    <span class="i-val" id="l_last_login">-</span>
+                <div class="info-box full">
+                    <span class="info-label">Leader Last Login</span>
+                    <span class="info-value"><i class="fa-solid fa-clock-rotate-left" style="color:var(--text-muted); margin-right:8px;"></i> <span id="l_last_login">-</span></span>
                 </div>
-            </div>
-        </div>
-
-        <!-- SIGNATURE CARD -->
-        <div class="card">
-            <div class="card-header"><i class="fa-solid fa-pen-nib"></i> Signature / Bio</div>
-            <div class="bio-box" onclick="copyText('p_bio_content', 'Signature')">
-                <div id="p_bio_content">No signature available.</div>
-                <span class="bio-hint">Click to copy</span>
             </div>
         </div>
 
     </div>
 
-    <!-- Toast -->
-    <div class="toast" id="toastMsg">Copied!</div>
+    <div class="toast-msg" id="toastMsg">
+        <i class="fa-solid fa-circle-check"></i> <span id="toastText">Copied!</span>
+    </div>
 
     <script>
         const els = {
@@ -535,11 +648,11 @@
             container: document.getElementById('profileData'),
             guildSec: document.getElementById('guildSection'),
             leaderSec: document.getElementById('leaderSection'),
-            toast: document.getElementById('toastMsg')
+            toast: document.getElementById('toastMsg'),
+            toastText: document.getElementById('toastText')
         };
 
-        // Fallback Dark Default Avatar
-        const defaultAvatar = "https://i.ibb.co/pXj5Hkx/default-avatar.png"; // Clean anonymous user icon
+        const defaultAvatar = "https://i.ibb.co/pXj5Hkx/default-avatar.png";
 
         async function fetchData() {
             const uid = els.input.value.trim();
@@ -548,12 +661,12 @@
                 return;
             }
 
-            // Reset UI
             els.error.style.display = 'none';
             els.container.style.display = 'none';
-            els.loader.style.display = 'block';
+            els.loader.style.display = 'flex';
 
             try {
+                // Adjust if your API path is different
                 const res = await fetch(`/get?uid=${uid}`);
                 const data = await res.json();
 
@@ -577,26 +690,32 @@
 
             const val = (v) => (v !== null && v !== undefined && v !== "") ? v : '-';
 
-            // 1. Profile Basic & Image logic
+            // 1. Profile Top
             const avatarImg = document.getElementById('p_avatar');
             avatarImg.src = p.Player_Avatar_URL || defaultAvatar;
-            avatarImg.onerror = () => { avatarImg.src = defaultAvatar; }; // If broken link, show default
+            avatarImg.onerror = () => { avatarImg.src = defaultAvatar; };
 
             document.getElementById('p_level').innerText = val(p.Player_Level);
             document.getElementById('p_name').innerHTML = val(p.Player_Name);
             document.getElementById('p_uid_val').innerText = val(p.Player_UID);
 
-            // Ranks & Likes
+            // Stats
             document.getElementById('s_br').innerText = val(r.BR_Points);
             document.getElementById('s_cs').innerText = val(r.CS_Points);
             document.getElementById('s_likes').innerText = val(p.Player_Likes);
 
-            // 2. Account Details (New additions)
+            // 2. Signature
+            let bioText = val(p.Player_Signature);
+            bioText = bioText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            document.getElementById('p_bio_content').innerHTML = `<i class="fa-solid fa-quote-left"></i> ${bioText}`;
+
+            // 3. Account Details
             document.getElementById('a_exp').innerText = val(p.Player_EXP);
             document.getElementById('a_region').innerText = val(p.Player_Region);
             document.getElementById('a_created').innerText = val(p.Account_Create_Time);
             document.getElementById('a_last_login').innerText = val(p.Account_Last_Login);
-            // 3. Guild Details
+
+            // 4. Guild Details
             if (g.Guild_ID) {
                 els.guildSec.style.display = 'block';
                 els.leaderSec.style.display = 'block';
@@ -607,7 +726,7 @@
                 document.getElementById('g_id').innerText = val(g.Guild_ID);
                 document.getElementById('g_members').innerText = `${val(g.Guild_Total_Members)} / ${val(g.Guild_Capacity)}`;
 
-                // 4. Leader Details
+                // 5. Leader Details
                 document.getElementById('l_name').innerText = val(l.Guild_Leader_Name);
                 document.getElementById('l_level').innerText = val(l.Guild_Leader_Level);
                 document.getElementById('l_uid').innerText = val(l.Guild_Leader_UID);
@@ -617,11 +736,6 @@
                 els.guildSec.style.display = 'none';
                 els.leaderSec.style.display = 'none';
             }
-
-            // 5. Signature
-            let bioText = val(p.Player_Signature);
-            bioText = bioText.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // Basic sanitize
-            document.getElementById('p_bio_content').innerHTML = bioText;
         }
 
         function showError(msg) {
@@ -629,18 +743,27 @@
             els.error.style.display = 'block';
         }
 
-        function copyText(elementId, name) {
-            const text = document.getElementById(elementId).innerText;
+        function copyValue(elementId, name) {
+            let text = document.getElementById(elementId).innerText;
+            // Clean up quote icon text if copying bio
+            if (elementId === 'p_bio_content') {
+                text = text.replace(/^"\s*/, ''); // removes quote marks if any
+            }
+            
             if (text && text !== '-' && text !== '00000000') {
                 navigator.clipboard.writeText(text);
-                showToast(`${name} Copied!`);
+                showToast(`${name} Copied Successfully!`);
             }
         }
 
+        let toastTimeout;
         function showToast(msg) {
-            els.toast.innerText = msg;
+            clearTimeout(toastTimeout);
+            els.toastText.innerText = msg;
             els.toast.classList.add('show');
-            setTimeout(() => { els.toast.classList.remove('show'); }, 2000);
+            toastTimeout = setTimeout(() => { 
+                els.toast.classList.remove('show'); 
+            }, 2500);
         }
 
         els.input.addEventListener('keypress', (e) => {
